@@ -15,7 +15,7 @@
   <meta name="twitter:card" content="summary_large_image">
 
   <!-- PWA bits -->
-  <meta name="theme-color" content="#C6F54A">
+  <meta name="theme-color" content="#0D1117">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="BrandMonkey">
@@ -23,13 +23,15 @@
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Sora:wght@600;700&display=swap" rel="stylesheet">
 
   <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐵</text></svg>'">
 
   <!-- Styles -->
   <link rel="stylesheet" href="styles.css" />
+  <!-- JS (Defer for performance) -->
+  <script src="script.js" defer></script>
 </head>
 <body>
   <!-- Scroll progress -->
@@ -38,7 +40,7 @@
   <a class="sr-only focus-outline" href="#main">Skip to main content</a>
 
   <!-- Header -->
-  <header class="header" role="banner">
+  <header class="header" id="pageHeader" role="banner">
     <div class="container">
       <nav class="nav" aria-label="Primary">
         <a href="#home" class="logo focus-outline">BrandMonkey</a>
@@ -48,7 +50,7 @@
           <li><a class="focus-outline" href="#work">Work</a></li>
           <li><a class="focus-outline" href="#about">About</a></li>
           <li><a class="focus-outline" href="#contact">Contact</a></li>
-          <li><a class="btn btn-primary focus-outline" href="#book">Book a Call</a></li>
+          <li><a class="btn btn-primary focus-outline" href="#book" id="navBookBtn">Book a Call</a></li>
         </ul>
       </nav>
     </div>
@@ -57,16 +59,10 @@
   <main id="main">
     <!-- HERO -->
     <section id="home" class="hero section" aria-label="Hero">
-      <div class="decor" aria-hidden="true">
-        <div class="blob b1" data-depth="0.15"></div>
-        <div class="blob b2" data-depth="0.25"></div>
-        <div class="blob b3" data-depth="0.1"></div>
-        <div class="pattern"></div>
-      </div>
-
+      <div class="aurora-bg" aria-hidden="true"></div>
       <div class="container hero-narrow">
         <p class="kicker center">Strategy • Creative • Performance</p>
-        <h1 class="text-display text-display-xl gradient-animated center">
+        <h1 class="text-display text-display-xl center">
           Make your brand impossible to ignore.
         </h1>
         <p class="subtitle center">
@@ -74,35 +70,35 @@
         </p>
 
         <div class="hero-cta center">
-          <a href="#book" class="btn btn-primary btn-lg btn-shine focus-outline">Book a Call</a>
+          <a href="#book" class="btn btn-primary btn-lg focus-outline" id="heroBookBtn">Book a Call</a>
           <a href="#work" class="btn btn-outline btn-lg focus-outline">View Work</a>
         </div>
 
         <ul class="hero-stats center" aria-label="Key results">
-          <li class="chip glass"><span>+214%</span> ROAS</li>
-          <li class="chip glass"><span>3x</span> leads in 90 days</li>
-          <li class="chip glass"><span>100+</span> brands</li>
+          <li class="chip"><span>+214%</span> ROAS</li>
+          <li class="chip"><span>3x</span> leads in 90 days</li>
+          <li class="chip"><span>100+</span> brands</li>
         </ul>
       </div>
     </section>
 
     <!-- VALUE PROPS -->
-    <section class="section surface" aria-labelledby="why">
+    <section id="why" class="section" aria-labelledby="why-title">
       <div class="container narrow">
-        <h2 id="why" class="text-display text-display-md center section-head">Why brands choose us</h2>
+        <h2 id="why-title" class="text-display text-display-md center section-head">Why brands choose us</h2>
         <div class="values-grid">
-          <article class="value-card fade-in tilt">
+          <article class="card value-card fade-in">
             <div class="emoji">🧭</div>
             <h3 class="text-display-sm">Strategy that sells</h3>
             <p>No fluff. Data-driven plans that turn browsers into buyers and followers into fans.</p>
           </article>
  
-          <article class="value-card fade-in tilt">
+          <article class="card value-card fade-in">
             <div class="emoji">🌀</div>
             <h3 class="text-display-sm">Full-funnel performance</h3>
             <p>From awareness to advocacy, we optimize every touchpoint for growth.</p>
           </article>
-          <article class="value-card fade-in tilt">
+          <article class="card value-card fade-in">
             <div class="emoji">⚡</div>
             <h3 class="text-display-sm">Iteration at startup speed</h3>
             <p>Fast execution, rapid testing, quick pivots. We move at the speed of opportunity.</p>
@@ -112,12 +108,12 @@
     </section>
 
     <!-- SERVICES -->
-    <section id="services" class="section" aria-labelledby="services-title">
+    <section id="services" class="section surface" aria-labelledby="services-title">
       <div class="container narrow">
         <h2 id="services-title" class="text-display text-display-md center section-head">Our Services</h2>
         <div class="services-accordion" role="region" aria-labelledby="services-title">
           <div class="service-item fade-in">
-            <button class="service-header" onclick="toggleService(this)" aria-expanded="false">
+            <button class="service-header" aria-expanded="false">
               <h3>Brand Strategy &amp; Identity</h3>
               <span class="service-toggle" aria-hidden="true"></span>
             </button>
@@ -134,7 +130,7 @@
           </div>
 
           <div class="service-item fade-in">
-            <button class="service-header" onclick="toggleService(this)" aria-expanded="false">
+            <button class="service-header" aria-expanded="false">
               <h3>Content &amp; Social Media</h3>
               <span class="service-toggle" aria-hidden="true"></span>
             </button>
@@ -151,7 +147,7 @@
           </div>
 
           <div class="service-item fade-in">
-            <button class="service-header" onclick="toggleService(this)" aria-expanded="false">
+            <button class="service-header" aria-expanded="false">
               <h3>Paid Media &amp; Performance</h3>
               <span class="service-toggle" aria-hidden="true"></span>
             </button>
@@ -168,7 +164,7 @@
           </div>
 
           <div class="service-item fade-in">
-            <button class="service-header" onclick="toggleService(this)" aria-expanded="false">
+            <button class="service-header" aria-expanded="false">
               <h3>Web Design &amp; CRO</h3>
               <span class="service-toggle" aria-hidden="true"></span>
             </button>
@@ -183,38 +179,37 @@
               </div>
             </div>
           </div>
-        </div><!-- /accordion -->
+        </div>
       </div>
     </section>
 
     <!-- WORK -->
-    <section id="work" class="section surface" aria-labelledby="work-title">
-      <div class="container narrow">
+    <section id="work" class="section" aria-labelledby="work-title">
+      <div class="container">
         <h2 id="work-title" class="text-display text-display-md center section-head">Selected Work</h2>
         <div class="work-grid">
-          
-          <article class="work-card fade-in shine">
-            <div class="work-image">SaaS Landing Page</div>
+          <article class="card work-card fade-in">
+            <div class="work-image"><div class="work-image-placeholder">SaaS Landing Page</div></div>
             <div class="work-info">
               <span class="work-metric">+89% Conversions</span>
               <h3 class="text-display-sm">Tech Startup</h3>
-              <p class="muted">Landing page redesign and conversion optimization for a B2B SaaS company.</p>
+              <p>Landing page redesign and conversion optimization for a B2B SaaS company.</p>
             </div>
           </article>
-          <article class="work-card fade-in shine">
-            <div class="work-image">Social Campaign</div>
+          <article class="card work-card fade-in">
+            <div class="work-image"><div class="work-image-placeholder">Social Campaign</div></div>
             <div class="work-info">
               <span class="work-metric">2.3M Reach</span>
               <h3 class="text-display-sm">Food &amp; Beverage</h3>
-              <p class="muted">A viral social campaign that generated massive awareness and engagement.</p>
+              <p>A viral social campaign that generated massive awareness and engagement.</p>
             </div>
           </article>
-          <article class="work-card fade-in shine">
-            <div class="work-image">Brand Identity</div>
+          <article class="card work-card fade-in">
+            <div class="work-image"><div class="work-image-placeholder">Brand Identity</div></div>
             <div class="work-info">
               <span class="work-metric">+156% Recognition</span>
               <h3 class="text-display-sm">Healthcare</h3>
-              <p class="muted">Complete rebrand improving trust and referrals.</p>
+              <p>Complete rebrand improving trust and referrals.</p>
             </div>
           </article>
         </div>
@@ -222,11 +217,11 @@
     </section>
 
     <!-- SOCIAL PROOF -->
-    <section class="section" aria-labelledby="trusted">
-      <div class="container narrow">
-        <h2 id="trusted" class="text-display text-display-md center section-head">Trusted by growing brands</h2>
+    <section id="trusted" class="section surface" aria-labelledby="trusted-title">
+        <div class="container narrow">
+        <h2 id="trusted-title" class="text-display text-display-md center section-head">Trusted by growing brands</h2>
 
-        <div class="logo-grid">
+        <div class="logo-grid fade-in">
           <div class="client-logo">CLIENT A</div><div class="client-logo">CLIENT B</div>
           <div class="client-logo">CLIENT C</div><div class="client-logo">CLIENT D</div>
           <div class="client-logo">CLIENT E</div><div class="client-logo">CLIENT F</div>
@@ -237,47 +232,16 @@
             <blockquote class="testimonial-text">“BrandMonkey transformed our digital presence. 300% increase in qualified leads within 3 months.”</blockquote>
             <figcaption class="testimonial-author">
               <div class="author-avatar"></div>
-              <div><div class="author-name">Sarah Chen</div><div class="muted small">CEO, TechFlow Solutions</div></div>
+              <div><div class="author-name">Sarah Chen</div><div class="author-title">CEO, TechFlow Solutions</div></div>
             </figcaption>
           </figure>
           <figure class="testimonial-card fade-in">
             <blockquote class="testimonial-text">“Finally, a marketing team that gets it. Not just pretty designs—campaigns that convert.”</blockquote>
             <figcaption class="testimonial-author">
               <div class="author-avatar"></div>
-              <div><div class="author-name">Rajesh Kumar</div><div class="muted small">Founder, GreenLeaf Organics</div></div>
+              <div><div class="author-name">Rajesh Kumar</div><div class="author-title">Founder, GreenLeaf Organics</div></div>
             </figcaption>
           </figure>
-          <figure class="testimonial-card fade-in">
-            <blockquote class="testimonial-text">“Best investment we made. ROI went positive from month one.”</blockquote>
-            <figcaption class="testimonial-author">
-              <div class="author-avatar"></div>
-              <div><div class="author-name">Amanda Silva</div><div class="muted small">Marketing Director, Urban Styles</div></div>
-            </figcaption>
-          </figure>
-        </div>
-      </div>
-    </section>
-
-    <!-- PROCESS -->
-    <section class="section surface" aria-labelledby="process-title">
-      <div class="container narrow">
-        <h2 id="process-title" class="text-display text-display-md center section-head">How we work</h2>
-        <div class="process-steps">
-          <div class="process-step fade-in">
-            <div class="step-number">1</div>
-            <h3 class="text-display-sm">Discover</h3>
-            <p class="muted">Deep dive into your business, audience, and market to uncover opportunities.</p>
-          </div>
-          <div class="process-step fade-in">
-            <div class="step-number">2</div>
-            <h3 class="text-display-sm">Design</h3>
-            <p class="muted">Strategies and creative aligned to goals and audience.</p>
-          </div>
-          <div class="process-step fade-in">
-            <div class="step-number">3</div>
-            <h3 class="text-display-sm">Drive</h3>
-            <p class="muted">Execute, measure, and optimize—continuously.</p>
-          </div>
         </div>
       </div>
     </section>
@@ -285,15 +249,15 @@
     <!-- ABOUT -->
     <section id="about" class="section" aria-labelledby="founder-title">
       <div class="container narrow">
-        <h2 id="founder-title" class="text-display text-display-md center section-head">Meet the founder</h2>
-        <div class="about-center">
-          <div class="avatar-circle">Dineth Photo</div>
+        <div class="about-center fade-in">
+          <div class="avatar-circle"></div>
+          <h2 id="founder-title" class="text-display text-display-md center">Meet Dineth</h2>
           <div class="about-copy">
-            <p class="muted">
-              Hi, I’m Dineth—the monkey behind BrandMonkey. 8+ years in marketing &amp; advertising, helping 100+ brands cut through the noise.
+            <p>
+              The monkey behind BrandMonkey. With over 8 years in the marketing trenches, I've helped 100+ brands cut through the noise.
             </p>
-            <p class="muted">
-              From Sri Lankan startups to global enterprises, every brand has a story worth telling—told so people stop, listen, and act.
+            <p>
+              From Sri Lankan startups to global enterprises, my mission is to tell stories that make people stop, listen, and act.
             </p>
             <div class="bullets">
               <div>🎯 8+ years experience</div>
@@ -307,65 +271,55 @@
     </section>
 
     <!-- CTA -->
-    <section id="book" class="cta-band solid" aria-label="Booking">
+    <section id="book" class="cta-band" aria-label="Booking">
       <div class="container center narrow">
         <h2 class="text-display text-display-md">Ready to outrun the jungle?</h2>
-        <p class="cta-sub">Book a free 30-minute strategy call and let’s make your brand impossible to ignore.</p>
-        <button class="btn btn-dark btn-lg btn-shine focus-outline" onclick="openBookingModal()">Book a Call</button>
+        <p class="cta-sub">Book a free 30-minute strategy call. Let’s make your brand impossible to ignore.</p>
+        <button class="btn btn-primary btn-lg focus-outline" id="ctaBookBtn">Book Your Free Call</button>
       </div>
     </section>
 
     <!-- CONTACT -->
     <section id="contact" class="section" aria-labelledby="contact-title">
       <div class="container narrow">
-        <h2 id="contact-title" class="text-display text-display-md center section-head">Let’s talk</h2>
-        <div class="contact-narrow">
+        <h2 id="contact-title" class="text-display text-display-md center section-head">Let’s Talk</h2>
+        <div class="contact-layout">
+          <div class="contact-aside">
+              <h3 class="text-display-sm">Get in touch</h3>
+              <p>Have a project in mind? Fill out the form, or contact me directly. I'll get back to you within one business day.</p>
+              <div class="contact-list">
+                <div><strong>Email:</strong> <a class="focus-outline link" href="mailto:hello@brandmonkey.lk">hello@brandmonkey.lk</a></div>
+                <div><strong>WhatsApp:</strong> <a class="focus-outline link" href="https://wa.me/94701234567?text=Hi%20BrandMonkey%2C%20I%27d%20like%20to%20discuss%20my%20brand%27s%20marketing%20needs.">+94 70 123 4567</a></div>
+                <div><strong>Office:</strong> Kandy, Sri Lanka</div>
+              </div>
+          </div>
           <form id="contactForm" class="contact-form fade-in" action="#" method="POST" novalidate>
-            <div class="form-row">
-              <div class="form-group">
-                <label class="form-label" for="name">Full Name *</label>
-                <input class="form-input focus-outline" id="name" name="name" type="text" required>
-              </div>
-              <div class="form-group">
-                <label class="form-label" for="email">Email Address *</label>
-                <input class="form-input focus-outline" id="email" name="email" type="email" required>
-              </div>
+            <div class="form-group">
+              <label class="form-label" for="name">Full Name *</label>
+              <input class="form-input focus-outline" id="name" name="name" type="text" required>
             </div>
-            <div class="form-row">
-              <div class="form-group">
-                <label class="form-label" for="company">Company</label>
-                <input class="form-input focus-outline" id="company" name="company" type="text">
-              </div>
-              <div class="form-group">
-                <label class="form-label" for="budget">Monthly Marketing Budget</label>
-                <select class="form-select focus-outline" id="budget" name="budget">
-                  <option value="">Select budget range</option>
-                  <option value="under-1000">Under $1,000</option>
-                  <option value="1000-5000">$1,000 - $5,000</option>
-                  <option value="5000-10000">$5,000 - $10,000</option>
-                  <option value="10000-25000">$10,000 - $25,000</option>
-                  <option value="25000-plus">$25,000+</option>
-                </select>
-              </div>
+            <div class="form-group">
+              <label class="form-label" for="email">Email Address *</label>
+              <input class="form-input focus-outline" id="email" name="email" type="email" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="budget">Monthly Marketing Budget</label>
+              <select class="form-input focus-outline" id="budget" name="budget">
+                <option value="">Select budget range</option>
+                <option value="under-1000">Under $1,000</option>
+                <option value="1000-5000">$1,000 - $5,000</option>
+                <option value="5000-10000">$5,000 - $10,000</option>
+                <option value="10000-25000">$10,000 - $25,000</option>
+                <option value="25000-plus">$25,000+</option>
+              </select>
             </div>
             <div class="form-group">
               <label class="form-label" for="message">Tell us about your project *</label>
-              <textarea class="form-textarea focus-outline" id="message" name="message" placeholder="Goals? Challenges? Timeline?" required></textarea>
+              <textarea class="form-input focus-outline" id="message" name="message" placeholder="Your goals, challenges, timeline..." required></textarea>
             </div>
             <div style="display:none;"><input type="text" name="honey" id="honey" tabindex="-1" autocomplete="off"></div>
             <button type="submit" class="btn btn-primary btn-lg focus-outline w-100">Send Message</button>
           </form>
-
-          <div class="contact-aside">
-            <div class="card fade-in">
-              <h3 class="text-display-sm">Quick Contact</h3>
-              <div class="contact-list">
-                <div><strong>WhatsApp:</strong> <a class="focus-outline link" href="https://wa.me/94701234567?text=Hi%20BrandMonkey%2C%20I%27d%20like%20to%20discuss%20my%20brand%27s%20marketing%20needs.">+94 70 123 4567</a></div>
-                <div><strong>Email:</strong> <a class="focus-outline link" href="mailto:hello@brandmonkey.lk">hello@brandmonkey.lk</a></div>
-                <div><strong>Office:</strong> Kandy, Sri Lanka</div>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </section>
@@ -376,32 +330,31 @@
     <div class="container narrow">
       <div class="footer-top">
         <a href="#home" class="logo">BrandMonkey</a>
-        <a class="btn btn-primary" href="#book">Book a Call</a>
-      </div>
-      <div class="footer-bottom">
-        <div>© 2025 BrandMonkey. All rights reserved.</div>
         <div class="muted small">
           <a class="focus-outline link" href="/privacy">Privacy Policy</a> &nbsp;•&nbsp;
           <a class="focus-outline link" href="/terms">Terms of Service</a>
         </div>
+      </div>
+      <div class="footer-bottom">
+        <div>© 2025 BrandMonkey. All rights reserved.</div>
+        <div class="muted small">Engineered to be ignored by none.</div>
       </div>
     </div>
   </footer>
 
   <!-- BOOKING MODAL -->
   <div class="modal" id="bookingModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="bookingTitle">
-    <div class="modal-content">
-      <button class="modal-close focus-outline" onclick="closeBookingModal()" aria-label="Close modal">&times;</button>
+    <div class="modal-content fade-in">
+      <button class="modal-close focus-outline" id="modalCloseBtn" aria-label="Close modal">&times;</button>
       <h3 id="bookingTitle" class="text-display-sm center" style="margin-bottom: var(--space-lg);">Book Your Strategy Call</h3>
-      <p class="muted center" style="margin-bottom: var(--space-xl);">Choose your preferred way to book a 30-minute strategy call with Dineth.</p>
+      <p class="muted center" style="margin-bottom: var(--space-xl);">Choose your preferred way to book a free 30-minute call with Dineth.</p>
       <div class="modal-actions">
         <a class="btn btn-primary btn-lg focus-outline" target="_blank" rel="noopener" href="https://calendly.com/brandmonkey/strategy-call">📅 Book via Calendly</a>
         <a class="btn btn-outline btn-lg focus-outline" target="_blank" rel="noopener" href="https://wa.me/94701234567?text=Hi%20BrandMonkey%2C%20I%27d%20like%20to%20book%20a%20strategy%20call.%20">💬 Book via WhatsApp</a>
       </div>
-      <p class="muted small center" style="margin-top: var(--space-lg);">Free 30-minute call • No obligations • Actionable insights guaranteed</p>
+      <p class="muted small center" style="margin-top: var(--space-lg);">No obligations • Actionable insights guaranteed</p>
     </div>
   </div>
 
-  <script src="script.js"></script>
 </body>
 </html>
